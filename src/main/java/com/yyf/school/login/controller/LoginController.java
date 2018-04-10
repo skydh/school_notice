@@ -39,13 +39,11 @@ public class LoginController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	@ResponseBody
 	public BackDataJson login(@RequestParam("username") String username, @RequestParam("password") String password) {
-
 		BackDataJson backDataJson = new BackDataJson();
 		try {
 			backDataJson.setBackData(loginService.login(username, password));
 			backDataJson.setSuccess(true);
 			backDataJson.setBackMsg("登录成功");
-
 		} catch (SchoolException e) {
 			backDataJson.setSuccess(false);
 			backDataJson.setBackMsg("登录失败" + e.getMessage());
@@ -67,14 +65,11 @@ public class LoginController {
 		// UODO
 		BackDataJson backDataJson = new BackDataJson();
 		try {
-
 			backDataJson.setSuccess(true);
 			backDataJson.setBackMsg("登出成功");
-
 		} catch (SchoolException e) {
 			backDataJson.setSuccess(false);
 			backDataJson.setBackMsg("登出失败" + e.getMessage());
-
 		}
 		return backDataJson;
 
@@ -87,7 +82,6 @@ public class LoginController {
 	 * @param password
 	 * @return
 	 */
-
 	@RequestMapping(value = "/register", method = RequestMethod.GET)
 	@ResponseBody
 	public BackDataJson register(@RequestParam("username") String username, @RequestParam("password") String password) {
@@ -153,7 +147,7 @@ public class LoginController {
 	public BackDataJson showApprove() {
 		BackDataJson backDataJson = new BackDataJson();
 		try {
-
+			backDataJson.setBackData(loginService.showApprove());
 			backDataJson.setSuccess(true);
 			backDataJson.setBackMsg("完善资料成功");
 

@@ -42,13 +42,5 @@ public class TokenApplication {
 	public void setSchoolCase(int caseSchool) {
 		resources.get().put("caseSchool", caseSchool);
 	}
-	public int getAllow() {
-		return (int) resources.get().get("isAllow");
-	}
-
-	public void setAllow(int caseSchool) {
-		resources.get().put("isAllow", caseSchool);
-	}
-
 
 }

@@ -1,6 +1,7 @@
 package com.yyf.school.login.service.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -79,7 +80,7 @@ public class LoginServiceImpl implements LoginService {
 				tokenApplication.setToken(token);
 				tokenApplication.setUserId(allRoleVO.getId());
 				tokenApplication.setSchoolCase(allRoleVO.getCaseSchool());
-			
+
 				tokenVO.setToken(token);
 				tokenVO.setUserId(allRoleVO.getId());
 				return tokenVO;
@@ -124,11 +125,10 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public UserVO showApprove() throws SchoolException {
-		String id = tokenApplication.getUserId();
+	public List<UserVO> showApprove() throws SchoolException {
+		String pId = tokenApplication.getUserId();
 		int caseSchool = tokenApplication.getSchoolCase();
-		// if()
-		return null;
-
+		String id = loginDao.showId(pId);
+		return loginDao.showApprove(pId, caseSchool,id);
 	}
 }

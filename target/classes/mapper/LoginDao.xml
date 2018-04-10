@@ -10,10 +10,12 @@
 		parameterType="String">
 		select
 		a.id ,b.case_school
-		from all_user a inner join all_role on a.id=b.p_id
+		from all_user a inner join
+		all_role on a.id=b.p_id
 		where
 		a.user_name=
-		#{username} and a.password=#{password}
+		#{username} and
+		a.password=#{password}
 	</select>
 	<!-- parameterType=“int” 多个参数的话可以不用给 <select id="queryAll" resultType="Seckill"> 
 		select seckill_id,name,number,start_time,end_time,create_time from seckill 
@@ -54,20 +56,55 @@
 		#{ids}
 	</update>
 
-	<select id="findActiveBlogLike" resultType="Blog">
-		SELECT * FROM all_role WHERE state = ‘ACTIVE’
+	<select id="showApprove">
+		SELECT a.username,b.id FROM all_role b inner join all_user a on
+		b.p_id=a.id where b.p_id=#{pId}
 		<choose>
-			<when test="title != null">
-				AND title like #{title}
+			<when test="caseSchool == 1">
+				AND school_code =#{id}
 			</when>
-			<when test="author != null and author.name != null">
-				AND author_name like #{author.name}
+			<when test="caseSchool == 2">
+				AND college_code =#{id}
+			</when>
+			<when test="caseSchool == 3">
+				AND grade_code =#{id}
+			</when>
+			<when test="caseSchool == 4">
+				AND class_code=#{id}
 			</when>
 			<otherwise>
-				AND featured = 1
+				AND 1 = -1
 			</otherwise>
 		</choose>
 	</select>
+	<select id="showId">
+		select
+		id
+		from all_user
+		where p_id=#{pId}
+	</select>
 
+	<select id="showCode">
+		SELECT
+		a.school_code,a.college_code,a.grade_code,a.class_code FROM
+		all_role a
+		inner join all_user b on
+		a.p_id=b.id where b.id=#{id}
+
+	</select>
+	<select id="isPower">
+		SELECT
+		a.id FROM
+		all_role a
+		inner join all_user b on
+		a.p_id=b.id where b.id=#{id} and is_allow=1 and case_school between 1
+		and 4
+	</select>
+	<select id="findUserNameById">
+		select
+		username
+		from all_user
+		where id=#{id}
+	</select>
 
 </mapper>

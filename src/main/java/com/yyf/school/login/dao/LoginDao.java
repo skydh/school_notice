@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.yyf.school.login.vo.AllRoleVO;
+import com.yyf.school.login.vo.UserVO;
 
 /**
  * 
@@ -59,6 +60,38 @@ public interface LoginDao {
 	 * @param ids
 	 * 
 	 */
-	void doApprove(String pId);
+	List<UserVO> showApprove(String pId, int caseSchool, String id);
+
+	/**
+	 * 查询当前角色主键
+	 * 
+	 * @param ids
+	 * 
+	 */
+	String showId(String pId);
+
+	/**
+	 * 查询当前角色的校id,学院id
+	 * 
+	 * @param ids
+	 * 
+	 */
+	AllRoleVO showCode(String id);
+
+	/**
+	 * 判断当前用户是否有发布，审批权限
+	 * 
+	 * @param ids
+	 * 
+	 */
+	String isPower(String id);
+
+	/**
+	 * 根据角色id查询用户名
+	 * 
+	 * @param ids
+	 * 
+	 */
+	String findUserNameById(String id);
 
 }

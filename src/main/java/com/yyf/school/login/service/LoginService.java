@@ -1,5 +1,7 @@
 package com.yyf.school.login.service;
 
+import java.util.List;
+
 import com.yyf.school.login.vo.AllRoleVO;
 import com.yyf.school.login.vo.DoApproveVO;
 import com.yyf.school.login.vo.TokenVO;
@@ -54,6 +56,6 @@ public interface LoginService {
 	 * @param ids
 	 * 
 	 */
-	UserVO showApprove() throws SchoolException;
+	 List<UserVO> showApprove() throws SchoolException;
 
 }

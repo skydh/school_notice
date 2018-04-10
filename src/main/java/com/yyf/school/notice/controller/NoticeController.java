@@ -20,7 +20,59 @@ import com.yyf.school.utils.exception.SchoolException;
 public class NoticeController {
 
 	@Autowired
-	private NoticeService loginService;
+	private NoticeService noticeService;
+
+	/**
+	 * 查看可看到的公告信息 。审批按钮的可见性，发布管理博客的按钮可见性。
+	 * 
+	 * @param courseId
+	 * @param password
+	 * @return
+	 */
+	@RequestMapping(value = "/showListAll", method = RequestMethod.GET)
+	@ResponseBody
+	public BackDataJson showListAll() {
+
+		BackDataJson backDataJson = new BackDataJson();
+		try {
+			backDataJson.setBackData(noticeService.showListAll());
+			backDataJson.setSuccess(true);
+			backDataJson.setBackMsg("查看成功");
+
+		} catch (SchoolException e) {
+			backDataJson.setSuccess(false);
+			backDataJson.setBackMsg("查看失败" + e.getMessage());
+
+		}
+		return backDataJson;
+
+	}
+
+	/**
+	 * 新增数据 从上下文获取到用户id,查看公告信息,这边不考虑分页
+	 * 
+	 * @param courseId
+	 * @param password
+	 * @return
+	 */
+	@RequestMapping(value = "/showList")
+	@ResponseBody
+	public BackDataJson showList() {
+
+		BackDataJson backDataJson = new BackDataJson();
+		try {
+			backDataJson.setBackData(noticeService.showList());
+			backDataJson.setSuccess(true);
+			backDataJson.setBackMsg("查看成功");
+
+		} catch (SchoolException e) {
+			backDataJson.setSuccess(false);
+			backDataJson.setBackMsg("查看失败" + e.getMessage());
+
+		}
+		return backDataJson;
+
+	}
 
 	/**
 	 * 删除数据
@@ -31,17 +83,18 @@ public class NoticeController {
 	 */
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	@ResponseBody
-	public BackDataJson login(@RequestParam("writerId") String writerId, @RequestParam("id") List<String> id) {
+	public BackDataJson delete(@RequestParam("ids") List<String> ids) {
 
 		BackDataJson backDataJson = new BackDataJson();
 		try {
-			// backDataJson.setBackData(loginService.login(username, password));
+			noticeService.delete(ids);
+			backDataJson.setBackData(noticeService.showList());
 			backDataJson.setSuccess(true);
-			backDataJson.setBackMsg("登录成功");
+			backDataJson.setBackMsg("删除成功");
 
 		} catch (SchoolException e) {
 			backDataJson.setSuccess(false);
-			backDataJson.setBackMsg("登录失败" + e.getMessage());
+			backDataJson.setBackMsg("删除失败" + e.getMessage());
 
 		}
 		return backDataJson;
@@ -49,103 +102,49 @@ public class NoticeController {
 	}
 
 	/**
-	 * 新增数据 从上下文获取到用户id,根据用户id查角色id和角色名字,作为文章外键和文章作者
+	 * 新增数据
 	 * 
-	 * @param courseId
-	 * @param password
 	 * @return
 	 */
-	@RequestMapping(value = "/insert")
+	@RequestMapping(value = "/insert", method = RequestMethod.GET)
+	@ResponseBody
+	public BackDataJson insert(@RequestBody NoticeVO noticeVO) {
+
+		BackDataJson backDataJson = new BackDataJson();
+		try {
+			noticeService.save(noticeVO);
+			backDataJson.setBackData(noticeService.showList());
+			backDataJson.setSuccess(true);
+			backDataJson.setBackMsg("保存成功");
+
+		} catch (SchoolException e) {
+			backDataJson.setSuccess(false);
+			backDataJson.setBackMsg("保存失败" + e.getMessage());
+
+		}
+		return backDataJson;
+
+	}
+
+	/**
+	 * 更新数据
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	@ResponseBody
 	public BackDataJson login(@RequestBody NoticeVO noticeVO) {
 
 		BackDataJson backDataJson = new BackDataJson();
 		try {
-			// backDataJson.setBackData(loginService.login(username, password));
+			noticeService.update(noticeVO);
+			backDataJson.setBackData(noticeService.showList());
 			backDataJson.setSuccess(true);
-			backDataJson.setBackMsg("登录成功");
+			backDataJson.setBackMsg("更新成功");
 
 		} catch (SchoolException e) {
 			backDataJson.setSuccess(false);
-			backDataJson.setBackMsg("登录失败" + e.getMessage());
-
-		}
-		return backDataJson;
-
-	}
-
-	/**
-	 * 删除数据
-	 * 
-	 * @param courseId
-	 * @param password
-	 * @return
-	 */
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	@ResponseBody
-	public BackDataJson login(@RequestParam("writerId") String writerId, @RequestParam("id") List<String> id) {
-
-		BackDataJson backDataJson = new BackDataJson();
-		try {
-			// backDataJson.setBackData(loginService.login(username, password));
-			backDataJson.setSuccess(true);
-			backDataJson.setBackMsg("登录成功");
-
-		} catch (SchoolException e) {
-			backDataJson.setSuccess(false);
-			backDataJson.setBackMsg("登录失败" + e.getMessage());
-
-		}
-		return backDataJson;
-
-	}
-
-	/**
-	 * 删除数据
-	 * 
-	 * @param courseId
-	 * @param password
-	 * @return
-	 */
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	@ResponseBody
-	public BackDataJson login(@RequestParam("writerId") String writerId, @RequestParam("id") List<String> id) {
-
-		BackDataJson backDataJson = new BackDataJson();
-		try {
-			// backDataJson.setBackData(loginService.login(username, password));
-			backDataJson.setSuccess(true);
-			backDataJson.setBackMsg("登录成功");
-
-		} catch (SchoolException e) {
-			backDataJson.setSuccess(false);
-			backDataJson.setBackMsg("登录失败" + e.getMessage());
-
-		}
-		return backDataJson;
-
-	}
-
-	/**
-	 * 删除数据
-	 * 
-	 * @param courseId
-	 * @param password
-	 * @return
-	 */
-	@RequestMapping(value = "/delete", method = RequestMethod.GET)
-	@ResponseBody
-	public BackDataJson login(@RequestParam("writerId") String writerId, @RequestParam("id") List<String> id) {
-
-		BackDataJson backDataJson = new BackDataJson();
-		try {
-			// backDataJson.setBackData(loginService.login(username, password));
-			backDataJson.setSuccess(true);
-			backDataJson.setBackMsg("登录成功");
-
-		} catch (SchoolException e) {
-			backDataJson.setSuccess(false);
-			backDataJson.setBackMsg("登录失败" + e.getMessage());
+			backDataJson.setBackMsg("更新失败" + e.getMessage());
 
 		}
 		return backDataJson;

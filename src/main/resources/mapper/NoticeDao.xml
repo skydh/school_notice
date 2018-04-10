@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yyf.school.notice.dao.NoticeDao">
+	<!-- 目的：为DAO接口提供sql语句配置 <update id="reduceNumber"> update seckill set number=number-1 
+		where seckill_id = #{seckillId} </update> -->
+
+	<select id="showListAll">
+		select
+		id ,write_date,write,title
+		from
+		notice
+		where
+		write_id in
+		#{ids}
+	</select>
+	<select id="showList">
+		select
+		id ,write_date,write,title
+		from
+		notice
+		where
+		write_id=
+		#{id}
+	</select>
+	<delete id="delete">
+		DELETE FROM notice WHERE id in #{id}
+	</delete>
+
+	<insert id="insert">
+		insert ignore into
+		notice(id,write_date,write_id,writer,title,contents)
+		values
+		VALUES(#{id}, #{writeDate}, #{writeId}, #{writer},
+		#{title},
+		#{contents})
+	</insert>
+
+	<update id="update">
+		update
+		notice set
+		write_date=#{writeDate},title=#{title},contents=#{contents},
+		WHERE
+		id =
+		#{id}
+	</update>
+	<select id="findHotById">
+		select
+		frequency
+		from
+		hot_data
+		where
+		id=
+		#{id}
+	</select>
+	<select id="findById">
+		select
+		id ,write_date,write,title
+		from
+		notice
+		where
+		id=
+		#{id}
+	</select>
+	<insert id="insertHot">
+		insert ignore into
+		hot_data(id,frequency)
+		values
+		VALUES(#{id},1)
+	</insert>
+
+	<update id="updateHot">
+		update
+		hot_data set
+		frequency=frequency+1,
+		WHERE
+		id =
+		#{id}
+	</update>
+</mapper>
