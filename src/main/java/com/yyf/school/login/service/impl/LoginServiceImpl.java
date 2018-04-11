@@ -112,6 +112,7 @@ public class LoginServiceImpl implements LoginService {
 			loginDao.insertAllData(allRoleVO);
 			tokenApplication.setSchoolCase(allRoleVO.getCaseSchool());
 		} else {
+			allRoleVO.setpId(tokenApplication.getUserId());
 			loginDao.updateAllData(allRoleVO);
 		}
 
@@ -129,6 +130,6 @@ public class LoginServiceImpl implements LoginService {
 		String pId = tokenApplication.getUserId();
 		int caseSchool = tokenApplication.getSchoolCase();
 		String id = loginDao.showId(pId);
-		return loginDao.showApprove(pId, caseSchool,id);
+		return loginDao.showApprove(pId, caseSchool, id);
 	}
 }

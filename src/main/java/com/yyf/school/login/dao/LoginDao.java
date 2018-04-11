@@ -52,7 +52,7 @@ public interface LoginDao {
 	 * @param ids
 	 * 
 	 */
-	void doApprove(int state, List<String> ids);
+	void doApprove(@Param("state") int state, @Param("ids") List<String> ids);
 
 	/**
 	 * 查看组长审批
@@ -60,7 +60,7 @@ public interface LoginDao {
 	 * @param ids
 	 * 
 	 */
-	List<UserVO> showApprove(String pId, int caseSchool, String id);
+	List<UserVO> showApprove(@Param("pId") String pId, @Param("caseSchool") int caseSchool, @Param("id") String id);
 
 	/**
 	 * 查询当前角色主键

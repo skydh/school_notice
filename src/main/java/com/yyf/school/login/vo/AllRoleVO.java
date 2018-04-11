@@ -19,7 +19,6 @@ public class AllRoleVO implements Serializable {
 	private String classCode;
 	private int caseSchool;
 	private String contend;
-	
 
 	public String getId() {
 		return id;
@@ -85,5 +84,11 @@ public class AllRoleVO implements Serializable {
 		this.contend = contend;
 	}
 
+	@Override
+	public String toString() {
+		return "AllRoleVO [id=" + id + ", pId=" + pId + ", schoolCode=" + schoolCode + ", collegeCode=" + collegeCode
+				+ ", gradeCode=" + gradeCode + ", classCode=" + classCode + ", caseSchool=" + caseSchool + ", contend="
+				+ contend + "]";
+	}
 
 }

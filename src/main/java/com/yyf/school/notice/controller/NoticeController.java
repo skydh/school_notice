@@ -133,7 +133,7 @@ public class NoticeController {
 	 */
 	@RequestMapping(value = "/update", method = RequestMethod.GET)
 	@ResponseBody
-	public BackDataJson login(@RequestBody NoticeVO noticeVO) {
+	public BackDataJson update(@RequestBody NoticeVO noticeVO) {
 
 		BackDataJson backDataJson = new BackDataJson();
 		try {
@@ -150,5 +150,30 @@ public class NoticeController {
 		return backDataJson;
 
 	}
+	/**
+	 * 更新数据
+	 * 
+	 * @return
+	 */
+	@RequestMapping(value = "/queryDetail", method = RequestMethod.GET)
+	@ResponseBody
+	public BackDataJson queryDetail(@RequestBody NoticeVO noticeVO) {
+
+		BackDataJson backDataJson = new BackDataJson();
+		try {
+			noticeService.update(noticeVO);
+			backDataJson.setBackData(noticeService.showList());
+			backDataJson.setSuccess(true);
+			backDataJson.setBackMsg("更新成功");
+
+		} catch (SchoolException e) {
+			backDataJson.setSuccess(false);
+			backDataJson.setBackMsg("更新失败" + e.getMessage());
+
+		}
+		return backDataJson;
+
+	}
+
 
 }
