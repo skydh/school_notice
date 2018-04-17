@@ -1,8 +1,11 @@
 package com.yyf.school.notice.vo;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class NoticeVO {
+public class NoticeVO implements Serializable {
+	
+	private static final long serialVersionUID = 7786086967119955325L;
 	private String id;
 	private String contents;
 	private Date writeDate;
@@ -56,6 +59,12 @@ public class NoticeVO {
 
 	public void setTitle(String title) {
 		this.title = title;
+	}
+
+	@Override
+	public String toString() {
+		return "NoticeVO [id=" + id + ", contents=" + contents + ", writeDate=" + writeDate + ", writer=" + writer
+				+ ", writerId=" + writerId + ", title=" + title + "]";
 	}
 
 }

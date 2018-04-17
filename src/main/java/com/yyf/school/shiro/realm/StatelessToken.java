@@ -15,22 +15,22 @@ import java.util.Map;
 public class StatelessToken implements AuthenticationToken {
 
 	private static final long serialVersionUID = 1L;
-	private String username;
+	private String userId;
 	private Map<String, ?> params;
-	private String clientDigest;
+	private String tokenId;
 
-	public StatelessToken(String username, Map<String, ?> params, String clientDigest) {
-		this.username = username;
+	public StatelessToken(String userId, Map<String, ?> params, String tokenId) {
+		this.userId = userId;
 		this.params = params;
-		this.clientDigest = clientDigest;
+		this.tokenId = tokenId;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getUserId() {
+		return userId;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public Map<String, ?> getParams() {
@@ -41,21 +41,21 @@ public class StatelessToken implements AuthenticationToken {
 		this.params = params;
 	}
 
-	public String getClientDigest() {
-		return clientDigest;
+	public String getTokenId() {
+		return tokenId;
 	}
 
-	public void setClientDigest(String clientDigest) {
-		this.clientDigest = clientDigest;
+	public void setTokenId(String tokenId) {
+		this.tokenId = tokenId;
 	}
 
 	@Override
 	public Object getPrincipal() {
-		return username;
+		return userId;
 	}
 
 	@Override
 	public Object getCredentials() {
-		return clientDigest;
+		return tokenId;
 	}
 }

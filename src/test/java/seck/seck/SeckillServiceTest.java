@@ -1,20 +1,22 @@
 package seck.seck;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.yyf.school.login.dao.LoginDao;
 import com.yyf.school.notice.dao.NoticeDao;
 import com.yyf.school.notice.vo.NoticeVO;
+import com.yyf.school.utils.constant.Constants;
+import com.yyf.school.utils.serializableY.SerializableY;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({ "classpath:spring/spring.xml", "classpath:spring/springmvc-config.xml" })
@@ -26,6 +28,9 @@ public class SeckillServiceTest {
 	@Autowired
 	private LoginDao loginDao;
 
+	@Autowired
+	private StringRedisTemplate redisTemplate;
+
 	@Test
 	public void test() throws InterruptedException {
 		// AllRoleVO allRoleVO = new AllRoleVO();
@@ -36,14 +41,10 @@ public class SeckillServiceTest {
 		// allRoleVO.setGradeCode("4dfdf44");
 		// allRoleVO.setCaseSchool(3);
 
-		List<String> list = new ArrayList<String>();
-		list.add("2");
+		// List<String> list = new ArrayList<String>();
+		// list.add("2");
 		// loginDao.doApprove(1, list);
-		// NoticeVO noticeVO = new NoticeVO();
-		// noticeVO.setId("11");
-		// noticeVO.setContents("111");
-		// noticeVO.setTitle("222");
-		// noticeVO.setWriteDate(new Date());
+
 		// NoticeDao.update(noticeVO);
 		// Integer sds = NoticeDao.findHotById("df");
 		// if (sds == null) {
@@ -52,7 +53,17 @@ public class SeckillServiceTest {
 		// System.out.println("1212");
 		// }
 		// System.out.println(list1.size());
-		NoticeDao.updateHot("sd1df");
-
+		// NoticeDao.updateHot("sd1df");
+		NoticeVO noticeVO = new NoticeVO();
+		noticeVO.setId("11");
+		noticeVO.setContents("111");
+		noticeVO.setTitle("222");
+		noticeVO.setWriteDate(new Date());
+		String stringVO = SerializableY.objectSerialiable(noticeVO);
+		redisTemplate.opsForValue().set("11", stringVO, Constants.offerDate, TimeUnit.SECONDS);
+		String voString = redisTemplate.opsForValue().get("11");
+		if (voString != null) {
+			System.out.println(((NoticeVO) SerializableY.objectDeserialization(voString)).toString());
+		}
 	}
 }

@@ -8,7 +8,7 @@ public class StatelessSubject extends DefaultWebSubjectFactory {
 
 	@Override
 	public Subject createSubject(SubjectContext context) {
-		// ²»´´½¨session
+
 		context.setSessionCreationEnabled(false);
 		return super.createSubject(context);
 	}

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class TokenApplication {
 
-	private final ThreadLocal<Map<String, Object>> resources = ThreadLocal.withInitial(() -> {
+	private final static ThreadLocal<Map<String, Object>> resources = ThreadLocal.withInitial(() -> {
 		return new HashMap<>();
 	});
 

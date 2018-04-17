@@ -8,15 +8,9 @@ import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.shiro.codec.Hex;
-import org.springframework.stereotype.Component;
 
 /**
- * <p>
- * User: Zhang Kaitao
- * <p>
- * Date: 14-2-26 这个作为token生成器吧 。
- * <p>
- * Version: 1.0
+ * @author yyf 这个作为token生成器吧 。
  */
 
 public class HmacSHA256Utils {
@@ -41,6 +35,7 @@ public class HmacSHA256Utils {
 	}
 
 	// 使用指定的密码对整个Map的内容生成消息摘要（散列值）
+	@SuppressWarnings("unchecked")
 	public static String digest(String key, Map<String, ?> map) {
 		StringBuilder s = new StringBuilder();
 		for (Object values : map.values()) {

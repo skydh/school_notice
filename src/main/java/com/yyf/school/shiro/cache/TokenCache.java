@@ -18,9 +18,9 @@ import com.yyf.school.utils.constant.Constants;
 @Component
 public class TokenCache {
 
-	private ConcurrentHashMap<String, Long> tokenDate = new ConcurrentHashMap<String, Long>();
+	private static ConcurrentHashMap<String, Long> tokenDate = new ConcurrentHashMap<String, Long>();
 
-	private AtomicInteger atomicInteger = new AtomicInteger(0);
+	private static AtomicInteger atomicInteger = new AtomicInteger(0);
 
 	public Long getTokenDate(String token) {
 		return tokenDate.get(token);
@@ -28,6 +28,11 @@ public class TokenCache {
 
 	public void setAndUpdateTokenDate(String token, Long Date) {
 		tokenDate.put(token, Date);
+	}
+
+	public boolean isExistToken(String token) {
+
+		return tokenDate.containsKey(token);
 	}
 
 	public void autoIncrements() {

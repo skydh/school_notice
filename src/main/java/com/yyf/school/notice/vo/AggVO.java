@@ -1,8 +1,11 @@
 package com.yyf.school.notice.vo;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class AggVO {
+public class AggVO implements Serializable {
+
+	private static final long serialVersionUID = 1298973198698124734L;
 
 	private List<NoticeVO> list;
 

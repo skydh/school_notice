@@ -57,9 +57,14 @@
 		</property>
 		<property name="filterChainDefinitions">
 			<value>
-				<!--swagger -->
+				<!--/** = statelessAuthc -->
+
+				/user/login = anon
+				/user/logout = anon
+				/user/register = anon
 
 				/** = statelessAuthc
+
 			</value>
 		</property>
 	</bean>
