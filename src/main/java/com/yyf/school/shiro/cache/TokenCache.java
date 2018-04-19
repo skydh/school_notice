@@ -5,7 +5,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.yyf.school.utils.constant.Constants;
 
@@ -15,8 +15,11 @@ import com.yyf.school.utils.constant.Constants;
  * @author yyf
  *
  */
-@Component
+@Service
 public class TokenCache {
+	public TokenCache() {
+		System.out.println("初始化了");
+	}
 
 	private static ConcurrentHashMap<String, Long> tokenDate = new ConcurrentHashMap<String, Long>();
 

@@ -1,5 +1,6 @@
 package com.yyf.school.login.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import com.yyf.school.login.service.LoginService;
 import com.yyf.school.login.vo.AllRoleVO;
 import com.yyf.school.login.vo.DoApproveVO;
 import com.yyf.school.login.vo.TokenVO;
+import com.yyf.school.login.vo.TreeDataVO;
 import com.yyf.school.login.vo.UserVO;
 import com.yyf.school.shiro.cache.TokenCache;
 import com.yyf.school.shiro.codec.HmacSHA256Utils;
@@ -28,6 +30,10 @@ import com.yyf.school.utils.idcreate.IdCreateUtils;
  */
 @Service
 public class LoginServiceImpl implements LoginService {
+
+	public LoginServiceImpl() {
+		System.out.println("LoginServiceImpl");
+	}
 
 	@Autowired
 	private LoginDao loginDao;
@@ -79,7 +85,6 @@ public class LoginServiceImpl implements LoginService {
 				// 加入到上下文
 				tokenApplication.setToken(token);
 				tokenApplication.setUserId(allRoleVO.getId());
-				tokenApplication.setSchoolCase(allRoleVO.getCaseSchool());
 
 				tokenVO.setToken(token);
 				tokenVO.setUserId(allRoleVO.getId());
@@ -105,13 +110,32 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public void allData(AllRoleVO allRoleVO) throws SchoolException {
-		if (allRoleVO.getId() == null) {
+	public void allData(List<String> codes) throws SchoolException {
+
+		String pId = tokenApplication.getUserId();
+		AllRoleVO allRoleVO = new AllRoleVO();
+		int temp = codes.size();
+		if (temp > 0) {
+			allRoleVO.setSchoolCode(codes.get(0));
+		}
+		if (temp > 1) {
+			allRoleVO.setCollegeCode(codes.get(1));
+		}
+		if (temp > 2) {
+			allRoleVO.setGradeCode(codes.get(2));
+		}
+		if (temp > 3) {
+			allRoleVO.setClassCode(codes.get(3));
+		}
+		allRoleVO.setCaseSchool(temp + 1);
+		String id = loginDao.showId(pId);
+		if (id == null) {
 			allRoleVO.setId(IdCreateUtils.getId());
 			allRoleVO.setpId(tokenApplication.getUserId());
 			loginDao.insertAllData(allRoleVO);
-			tokenApplication.setSchoolCase(allRoleVO.getCaseSchool());
+
 		} else {
+			allRoleVO.setId(id);
 			allRoleVO.setpId(tokenApplication.getUserId());
 			loginDao.updateAllData(allRoleVO);
 		}
@@ -125,11 +149,71 @@ public class LoginServiceImpl implements LoginService {
 		loginDao.doApprove(2, ids.getnId());
 	}
 
+	// 这里有重写
 	@Override
 	public List<UserVO> showApprove() throws SchoolException {
 		String pId = tokenApplication.getUserId();
 		int caseSchool = tokenApplication.getSchoolCase();
 		String id = loginDao.showId(pId);
 		return loginDao.showApprove(pId, caseSchool, id);
+	}
+
+	@Override
+	public List<TreeDataVO> showAll() throws SchoolException {
+		List<AllRoleVO> list = loginDao.getAll();
+		List<TreeDataVO> backListSchool = new ArrayList<TreeDataVO>();
+		List<TreeDataVO> backListCollege = new ArrayList<TreeDataVO>();
+		List<TreeDataVO> backListGrade = new ArrayList<TreeDataVO>();
+		List<TreeDataVO> backListClass = new ArrayList<TreeDataVO>();
+		for (AllRoleVO temp : list) {
+			TreeDataVO vo = new TreeDataVO();
+			vo.setLabel(temp.getUserName());
+			vo.setValue(temp.getId());
+			vo.setClassCode(temp.getClassCode());
+			vo.setCollegeCode(temp.getCollegeCode());
+			vo.setGradeCode(temp.getGradeCode());
+			vo.setSchoolCode(temp.getSchoolCode());
+			if (temp.getCaseSchool() == 1) {
+				backListSchool.add(vo);
+			}
+			if (temp.getCaseSchool() == 2) {
+				backListCollege.add(vo);
+			}
+			if (temp.getCaseSchool() == 3) {
+				backListGrade.add(vo);
+			}
+			if (temp.getCaseSchool() == 4) {
+				backListClass.add(vo);
+			}
+		}
+		for (TreeDataVO temp : backListGrade) {
+			List<TreeDataVO> tempList = new ArrayList<TreeDataVO>();
+			for (TreeDataVO temp1 : backListClass) {
+				if (temp.getValue().equals(temp1.getGradeCode())) {
+					tempList.add(temp1);
+				}
+			}
+			temp.setChildren(tempList);
+		}
+		for (TreeDataVO temp : backListCollege) {
+			List<TreeDataVO> tempList = new ArrayList<TreeDataVO>();
+			for (TreeDataVO temp1 : backListGrade) {
+				if (temp.getValue().equals(temp1.getCollegeCode())) {
+					tempList.add(temp1);
+				}
+			}
+			temp.setChildren(tempList);
+		}
+		for (TreeDataVO temp : backListSchool) {
+			List<TreeDataVO> tempList = new ArrayList<TreeDataVO>();
+			for (TreeDataVO temp1 : backListCollege) {
+				if (temp.getValue().equals(temp1.getSchoolCode())) {
+					tempList.add(temp1);
+				}
+			}
+			temp.setChildren(tempList);
+		}
+
+		return backListSchool;
 	}
 }

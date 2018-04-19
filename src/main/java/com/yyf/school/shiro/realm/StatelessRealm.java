@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.yyf.school.shiro.cache.TokenCache;
 import com.yyf.school.shiro.codec.HmacSHA256Utils;
+import com.yyf.school.shiro.context.TokenApplication;
 import com.yyf.school.utils.constant.Constants;
 
 /**
@@ -22,6 +23,8 @@ import com.yyf.school.utils.constant.Constants;
 public class StatelessRealm extends AuthorizingRealm {
 	@Autowired
 	private TokenCache tokenCach;
+	@Autowired
+	private TokenApplication tokenApplication;
 
 	@Override
 	public boolean supports(AuthenticationToken token) {
@@ -48,6 +51,8 @@ public class StatelessRealm extends AuthorizingRealm {
 				if ((date - datetime) < Constants.offerDate) {
 					// 二次刷新过期时间
 					tokenCach.setAndUpdateTokenDate(tokenId, date);
+					tokenApplication.setToken(tokenId);
+					tokenApplication.setUserId(userId);
 					return new SimpleAuthenticationInfo(userId, tokenId, getName());
 				} else {
 					throw new AuthenticationException("token已经过期了");

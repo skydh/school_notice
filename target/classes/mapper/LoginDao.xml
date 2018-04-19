@@ -41,9 +41,9 @@
 		update
 		all_role set
 		school_code=#{schoolCode},grade_code=#{gradeCode},class_code=#{classCode},
-		case_school=#{caseSchool},contend=#{contend}
+		case_school=#{caseSchool},contend=#{contend},p_id=#{pId}
 		WHERE
-		p_id =
+		id =
 		#{id}
 	</update>
 
@@ -90,7 +90,7 @@
 
 	<select id="showCode" resultType="com.yyf.school.login.vo.AllRoleVO">
 		SELECT
-		a.school_code,a.college_code,a.grade_code,a.class_code FROM
+		a.id,a.school_code,a.college_code,a.grade_code,a.class_code FROM
 		all_role a
 		inner join all_user b on
 		a.p_id=b.id where b.id=#{id}
@@ -113,5 +113,16 @@
 		all_user
 		where id=#{id}
 	</select>
+
+	<select id="getAll" resultType="com.yyf.school.login.vo.AllRoleVO">
+		SELECT
+		a.id,a.school_code,a.college_code,a.grade_code,a.class_code,a.case_school,b.user_name 
+		FROM
+		all_role a
+		inner join all_user b on
+		a.p_id=b.id where
+		a.case_school!=5 and is_allow=1
+	</select>
+
 
 </mapper>

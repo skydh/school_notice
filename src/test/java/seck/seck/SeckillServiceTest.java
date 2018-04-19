@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.yyf.school.login.dao.LoginDao;
+import com.yyf.school.login.vo.AllRoleVO;
 import com.yyf.school.notice.dao.NoticeDao;
 import com.yyf.school.notice.vo.NoticeVO;
 import com.yyf.school.utils.constant.Constants;
@@ -53,17 +54,22 @@ public class SeckillServiceTest {
 		// System.out.println("1212");
 		// }
 		// System.out.println(list1.size());
-		// NoticeDao.updateHot("sd1df");
-		NoticeVO noticeVO = new NoticeVO();
-		noticeVO.setId("11");
-		noticeVO.setContents("111");
-		noticeVO.setTitle("222");
-		noticeVO.setWriteDate(new Date());
-		String stringVO = SerializableY.objectSerialiable(noticeVO);
-		redisTemplate.opsForValue().set("11", stringVO, Constants.offerDate, TimeUnit.SECONDS);
-		String voString = redisTemplate.opsForValue().get("11");
-		if (voString != null) {
-			System.out.println(((NoticeVO) SerializableY.objectDeserialization(voString)).toString());
-		}
+		// // NoticeDao.updateHot("sd1df");
+		// NoticeVO noticeVO = new NoticeVO();
+		// noticeVO.setId("11");
+		// noticeVO.setContents("111");
+		// noticeVO.setTitle("222");
+		// noticeVO.setWriteDate(new Date());
+		// String stringVO = SerializableY.objectSerialiable(noticeVO);
+		// redisTemplate.opsForValue().set("11", stringVO, Constants.offerDate,
+		// TimeUnit.SECONDS);
+		// String voString = redisTemplate.opsForValue().get("11");
+		// if (voString != null) {
+		// System.out.println(((NoticeVO)
+		// SerializableY.objectDeserialization(voString)).toString());
+		// }
+		AllRoleVO allRoleVO = loginDao.IsUser("1233", "1233");
+		System.out.println(allRoleVO.toString());
+
 	}
 }

@@ -76,19 +76,28 @@ public class NoticeServiceImpl implements NoticeService {
 		String id = tokenApplication.getUserId();
 		AllRoleVO allRoleVO = loginDao.showCode(id);
 		List<String> list = new ArrayList<String>();
-		if (allRoleVO.getSchoolCode() != null) {
-			list.add(allRoleVO.getSchoolCode());
+
+		if (allRoleVO != null) {
+			if (allRoleVO.getId() != null) {
+				list.add(allRoleVO.getId());
+			}
+			if (allRoleVO.getSchoolCode() != null) {
+				list.add(allRoleVO.getSchoolCode());
+			}
+			if (allRoleVO.getGradeCode() != null) {
+				list.add(allRoleVO.getGradeCode());
+			}
+			if (allRoleVO.getClassCode() != null) {
+				list.add(allRoleVO.getClassCode());
+			}
+			if (allRoleVO.getCollegeCode() != null) {
+				list.add(allRoleVO.getCollegeCode());
+			}
 		}
-		if (allRoleVO.getGradeCode() != null) {
-			list.add(allRoleVO.getGradeCode());
+		List<NoticeVO> voList = null;
+		if (list.size() > 0) {
+			voList = noticeDao.showListAll(list);
 		}
-		if (allRoleVO.getClassCode() != null) {
-			list.add(allRoleVO.getClassCode());
-		}
-		if (allRoleVO.getCollegeCode() != null) {
-			list.add(allRoleVO.getCollegeCode());
-		}
-		List<NoticeVO> voList = noticeDao.showListAll(list);
 		aggVO.setList(voList);
 		String tId = loginDao.isPower(id);
 		if (tId != null) {

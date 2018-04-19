@@ -1,6 +1,7 @@
 package com.yyf.school.login.vo;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * 完善信息
@@ -17,8 +18,10 @@ public class AllRoleVO implements Serializable {
 	private String collegeCode;
 	private String gradeCode;
 	private String classCode;
-	private int caseSchool;
+	private Integer caseSchool;
 	private String contend;
+	private String userName;
+	private List<AllRoleVO> list;
 
 	public String getId() {
 		return id;
@@ -68,11 +71,13 @@ public class AllRoleVO implements Serializable {
 		this.classCode = classCode;
 	}
 
-	public int getCaseSchool() {
+	
+
+	public Integer getCaseSchool() {
 		return caseSchool;
 	}
 
-	public void setCaseSchool(int caseSchool) {
+	public void setCaseSchool(Integer caseSchool) {
 		this.caseSchool = caseSchool;
 	}
 
@@ -89,6 +94,22 @@ public class AllRoleVO implements Serializable {
 		return "AllRoleVO [id=" + id + ", pId=" + pId + ", schoolCode=" + schoolCode + ", collegeCode=" + collegeCode
 				+ ", gradeCode=" + gradeCode + ", classCode=" + classCode + ", caseSchool=" + caseSchool + ", contend="
 				+ contend + "]";
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public List<AllRoleVO> getList() {
+		return list;
+	}
+
+	public void setList(List<AllRoleVO> list) {
+		this.list = list;
 	}
 
 }

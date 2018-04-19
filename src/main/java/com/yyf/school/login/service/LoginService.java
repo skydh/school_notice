@@ -5,6 +5,7 @@ import java.util.List;
 import com.yyf.school.login.vo.AllRoleVO;
 import com.yyf.school.login.vo.DoApproveVO;
 import com.yyf.school.login.vo.TokenVO;
+import com.yyf.school.login.vo.TreeDataVO;
 import com.yyf.school.login.vo.UserVO;
 import com.yyf.school.utils.exception.SchoolException;
 
@@ -40,7 +41,7 @@ public interface LoginService {
 	 * @param username
 	 * @param password
 	 */
-	void allData(AllRoleVO allRoleVO) throws SchoolException;
+	void allData(List<String> codes) throws SchoolException;
 
 	/**
 	 * 组长审批
@@ -56,6 +57,14 @@ public interface LoginService {
 	 * @param ids
 	 * 
 	 */
-	 List<UserVO> showApprove() throws SchoolException;
+	List<UserVO> showApprove() throws SchoolException;
+
+	/**
+	 * 查看当前审批
+	 * 
+	 * @param ids
+	 * 
+	 */
+	List<TreeDataVO> showAll() throws SchoolException;
 
 }

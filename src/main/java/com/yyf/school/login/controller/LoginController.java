@@ -1,5 +1,7 @@
 package com.yyf.school.login.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yyf.school.login.service.LoginService;
-import com.yyf.school.login.vo.AllRoleVO;
 import com.yyf.school.login.vo.DoApproveVO;
 import com.yyf.school.utils.backdata.BackDataJson;
 import com.yyf.school.utils.exception.SchoolException;
@@ -32,6 +33,8 @@ public class LoginController {
 	 * 存在则将其生成一个token返回，并且加入到tokencache里面，并且将查到的信息加入到token上下文里面。
 	 * 且，判断其原子变量除以100是否余0，若是除的尽，那么删除过期时间的key-value.
 	 * 
+	 * z这里加user_name唯一校验//由于时间问题不加了
+	 * 
 	 * @param courseId
 	 * @param password
 	 * @return
@@ -42,6 +45,23 @@ public class LoginController {
 		BackDataJson backDataJson = new BackDataJson();
 		try {
 			backDataJson.setBackData(loginService.login(username, password));
+			backDataJson.setSuccess(true);
+			backDataJson.setBackMsg("登录成功");
+		} catch (SchoolException e) {
+			backDataJson.setSuccess(false);
+			backDataJson.setBackMsg("登录失败" + e.getMessage());
+
+		}
+		return backDataJson;
+
+	}
+
+	@RequestMapping(value = "/getTree", method = RequestMethod.GET)
+	@ResponseBody
+	public BackDataJson getTree() {
+		BackDataJson backDataJson = new BackDataJson();
+		try {
+			backDataJson.setBackData(loginService.showAll());
 			backDataJson.setSuccess(true);
 			backDataJson.setBackMsg("登录成功");
 		} catch (SchoolException e) {
@@ -108,10 +128,10 @@ public class LoginController {
 	 */
 	@RequestMapping(value = "/allData")
 	@ResponseBody
-	public BackDataJson allData(@RequestBody AllRoleVO username) {
+	public BackDataJson allData(@RequestParam("codes") List<String> codes) {
 		BackDataJson backDataJson = new BackDataJson();
 		try {
-			loginService.allData(username);
+			loginService.allData(codes);
 			backDataJson.setSuccess(true);
 			backDataJson.setBackMsg("完善资料成功");
 

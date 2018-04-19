@@ -93,5 +93,7 @@ public interface LoginDao {
 	 * 
 	 */
 	String findUserNameById(String id);
+	
+	List<AllRoleVO> getAll();
 
 }
