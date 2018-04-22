@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yyf.school.login.service.LoginService;
 import com.yyf.school.login.vo.DoApproveVO;
+import com.yyf.school.shiro.context.TokenApplication;
 import com.yyf.school.utils.backdata.BackDataJson;
 import com.yyf.school.utils.exception.SchoolException;
 
@@ -27,6 +28,8 @@ import com.yyf.school.utils.exception.SchoolException;
 public class LoginController {
 	@Autowired
 	private LoginService loginService;
+	@Autowired
+	private TokenApplication tokenApplication;
 
 	/**
 	 * 登录验证 登录的这个url，shiro不做拦截，放过来，我们这里进行验证，判断是否存在这个信息。
@@ -85,6 +88,7 @@ public class LoginController {
 		// UODO
 		BackDataJson backDataJson = new BackDataJson();
 		try {
+			loginService.logout(tokenApplication.getToken());
 			backDataJson.setSuccess(true);
 			backDataJson.setBackMsg("登出成功");
 		} catch (SchoolException e) {
@@ -144,11 +148,15 @@ public class LoginController {
 
 	}
 
+	// 绝望，前端封装的post请求一直有问题，还是get算了
 	@RequestMapping(value = "/doApprove")
 	@ResponseBody
-	public BackDataJson doApprove(@RequestBody DoApproveVO ids) {
+	public BackDataJson doApprove(@RequestParam("id") List<String> id, @RequestParam("isApprove") Boolean isApprove) {
 		BackDataJson backDataJson = new BackDataJson();
 		try {
+			DoApproveVO ids = new DoApproveVO();
+			ids.setId(id);
+			ids.setIsApprove(isApprove);
 			loginService.doApprove(ids);
 			backDataJson.setSuccess(true);
 			backDataJson.setBackMsg("完善资料成功");

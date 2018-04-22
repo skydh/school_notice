@@ -106,12 +106,15 @@ public class NoticeController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/insert", method = RequestMethod.GET)
+	@RequestMapping(value = "/insert")
 	@ResponseBody
-	public BackDataJson insert(@RequestBody NoticeVO noticeVO) {
+	public BackDataJson insert(@RequestParam("title") String title, @RequestParam("contents") String contents) {
 
 		BackDataJson backDataJson = new BackDataJson();
 		try {
+			NoticeVO noticeVO = new NoticeVO();
+			noticeVO.setTitle(title);
+			noticeVO.setContents(contents);
 			noticeService.save(noticeVO);
 			backDataJson.setBackData(noticeService.showList());
 			backDataJson.setSuccess(true);
@@ -131,12 +134,17 @@ public class NoticeController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value = "/update", method = RequestMethod.GET)
+	@RequestMapping(value = "/update")
 	@ResponseBody
-	public BackDataJson update(@RequestBody NoticeVO noticeVO) {
+	public BackDataJson update(@RequestParam("title") String title, @RequestParam("contents") String contents,
+			@RequestParam("id") String id) {
 
 		BackDataJson backDataJson = new BackDataJson();
 		try {
+			NoticeVO noticeVO = new NoticeVO();
+			noticeVO.setTitle(title);
+			noticeVO.setContents(contents);
+			noticeVO.setId(id);
 			noticeService.update(noticeVO);
 			backDataJson.setBackData(noticeService.showList());
 			backDataJson.setSuccess(true);
@@ -150,6 +158,7 @@ public class NoticeController {
 		return backDataJson;
 
 	}
+
 	/**
 	 * 更新数据
 	 * 
@@ -157,23 +166,20 @@ public class NoticeController {
 	 */
 	@RequestMapping(value = "/queryDetail", method = RequestMethod.GET)
 	@ResponseBody
-	public BackDataJson queryDetail(@RequestBody NoticeVO noticeVO) {
+	public BackDataJson queryDetail(@RequestParam("id") String id) {
 
 		BackDataJson backDataJson = new BackDataJson();
 		try {
-			noticeService.update(noticeVO);
-			backDataJson.setBackData(noticeService.showList());
+			backDataJson.setBackData(noticeService.queryDetail(id));
 			backDataJson.setSuccess(true);
-			backDataJson.setBackMsg("更新成功");
-
+			backDataJson.setBackMsg("查询成功");
 		} catch (SchoolException e) {
 			backDataJson.setSuccess(false);
-			backDataJson.setBackMsg("更新失败" + e.getMessage());
+			backDataJson.setBackMsg("查询失败" + e.getMessage());
 
 		}
 		return backDataJson;
 
 	}
-
 
 }

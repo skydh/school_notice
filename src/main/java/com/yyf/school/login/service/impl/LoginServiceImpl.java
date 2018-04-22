@@ -142,18 +142,25 @@ public class LoginServiceImpl implements LoginService {
 
 	}
 
+	/**
+	 * 这里做批量处理操作，但是无奈前端太菜，语法不熟，只能单个了
+	 */
 	@Override
 	@Transactional
 	public void doApprove(DoApproveVO ids) throws SchoolException {
-		loginDao.doApprove(1, ids.getoId());
-		loginDao.doApprove(2, ids.getnId());
+		if (ids.getIsApprove()) {
+			loginDao.doApprove(1, ids.getId());
+		} else {
+			loginDao.doApprove(2, ids.getId());
+		}
 	}
 
 	// 这里有重写
 	@Override
 	public List<UserVO> showApprove() throws SchoolException {
 		String pId = tokenApplication.getUserId();
-		int caseSchool = tokenApplication.getSchoolCase();
+		AllRoleVO allRoleVO = loginDao.showCode(pId);
+		int caseSchool = allRoleVO.getCaseSchool();
 		String id = loginDao.showId(pId);
 		return loginDao.showApprove(pId, caseSchool, id);
 	}

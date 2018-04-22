@@ -52,7 +52,14 @@ public class NoticeServiceImpl implements NoticeService {
 	@Override
 	public void update(NoticeVO noticeVO) throws SchoolException {
 		noticeVO.setWriteDate(new Date());
+
 		noticeDao.update(noticeVO);
+		NoticeVO noticeVO1 = noticeDao.findById(noticeVO.getId());
+		String voString = redisTemplate.opsForValue().get(noticeVO.getId());
+		if (voString != null) {
+			String stringVO = SerializableY.objectSerialiable(noticeVO1);
+			redisTemplate.opsForValue().set(noticeVO.getId(), stringVO, Constants.offerDate, TimeUnit.SECONDS);
+		}
 	}
 
 	@Override
@@ -130,6 +137,7 @@ public class NoticeServiceImpl implements NoticeService {
 			} else if (times % (Constants.yyf) == 0) {
 				String stringVO = SerializableY.objectSerialiable(noticeVO);
 				redisTemplate.opsForValue().set(id, stringVO, Constants.offerDate, TimeUnit.SECONDS);
+				noticeDao.deleteHot(id);
 			} else {
 				noticeDao.updateHot(id);
 			}

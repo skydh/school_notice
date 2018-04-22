@@ -26,4 +26,6 @@ public interface NoticeDao {
 
 	void updateHot(String id);
 
+	void deleteHot(String id);
+
 }

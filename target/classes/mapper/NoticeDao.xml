@@ -59,7 +59,7 @@
 	<select id="findById" resultType="com.yyf.school.notice.vo.NoticeVO">
 		select
 		id
-		,write_date,writer,title
+		,write_date,writer,title,contents
 		from
 		notice
 		where
@@ -80,4 +80,7 @@
 		id =
 		#{id}
 	</update>
+	<delete id="deleteHot">
+		DELETE FROM hot_data WHERE id =#{id}
+	</delete>
 </mapper>

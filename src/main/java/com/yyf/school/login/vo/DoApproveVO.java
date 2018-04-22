@@ -6,23 +6,23 @@ import java.util.List;
 public class DoApproveVO implements Serializable {
 
 	private static final long serialVersionUID = -6837952776539937951L;
-	private List<String> oId;
-	private List<String> nId;
+	private List<String> id;
+	private Boolean isApprove;
 
-	public List<String> getoId() {
-		return oId;
+	public List<String> getId() {
+		return id;
 	}
 
-	public void setoId(List<String> oId) {
-		this.oId = oId;
+	public void setId(List<String> id) {
+		this.id = id;
 	}
 
-	public List<String> getnId() {
-		return nId;
+	public Boolean getIsApprove() {
+		return isApprove;
 	}
 
-	public void setnId(List<String> nId) {
-		this.nId = nId;
+	public void setIsApprove(Boolean isApprove) {
+		this.isApprove = isApprove;
 	}
 
 }

@@ -51,7 +51,6 @@
 			<value>
 				<!--/** = statelessAuthc -->
 				/user/login = anon
-				/user/logout = anon
 				/user/register = anon
 				/** = statelessAuthc
 			</value>
