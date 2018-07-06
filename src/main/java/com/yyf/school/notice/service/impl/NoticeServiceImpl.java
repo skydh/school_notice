@@ -82,9 +82,16 @@ public class NoticeServiceImpl implements NoticeService {
 		AggVO aggVO = new AggVO();
 		String id = tokenApplication.getUserId();
 		AllRoleVO allRoleVO = loginDao.showCode(id);
+	
 		List<String> list = new ArrayList<String>();
 
 		if (allRoleVO != null) {
+			int temp=allRoleVO.getIsAllow()==null?0:allRoleVO.getIsAllow();
+			if (temp==0) {
+				aggVO.setNoticeShow(false);
+			} else {
+				aggVO.setNoticeShow(true);
+			}
 			if (allRoleVO.getId() != null) {
 				list.add(allRoleVO.getId());
 			}
@@ -112,6 +119,8 @@ public class NoticeServiceImpl implements NoticeService {
 		} else {
 			aggVO.setApproveMenu(false);
 		}
+		
+		
 		return aggVO;
 	}
 

@@ -90,7 +90,7 @@
 
 	<select id="showCode" resultType="com.yyf.school.login.vo.AllRoleVO">
 		SELECT
-		a.id,a.school_code,a.college_code,a.grade_code,a.class_code,a.case_school
+		a.id,a.school_code,a.college_code,a.grade_code,a.class_code,a.case_school,a.is_allow
 		FROM
 		all_role a
 		inner join all_user b on

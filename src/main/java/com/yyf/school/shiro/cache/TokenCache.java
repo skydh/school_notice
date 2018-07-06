@@ -18,7 +18,7 @@ import com.yyf.school.utils.constant.Constants;
 @Service
 public class TokenCache {
 	public TokenCache() {
-		System.out.println("初始化了");
+		System.out.println("初始化了111");
 	}
 
 	private static ConcurrentHashMap<String, Long> tokenDate = new ConcurrentHashMap<String, Long>();
@@ -51,10 +51,10 @@ public class TokenCache {
 	 * 去除过期时间数据
 	 */
 	public void clearData() {
-		Long date = new Date().getTime();
-		for (Entry<String, Long> entry : tokenDate.entrySet()) {
-			long value = entry.getValue();
-			if ((date - value) > Constants.offerDate) {
+		Long date = new Date().getTime();//获取当前时间
+		for (Entry<String, Long> entry : tokenDate.entrySet()) {//循环遍历缓存数据
+			long value = entry.getValue();//取出缓存数据时间
+			if ((date - value) > Constants.offerDate) {//判断当前时间减去缓存时间是否大于一个小时，如果大于，则清除数据
 				tokenDate.remove(entry.getKey());
 			}
 		}

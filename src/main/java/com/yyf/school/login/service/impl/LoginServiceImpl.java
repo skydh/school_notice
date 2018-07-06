@@ -77,7 +77,7 @@ public class LoginServiceImpl implements LoginService {
 				// 加入到缓存
 				tokenCache.setAndUpdateTokenDate(token, new Date().getTime());
 				// 这里要判断下是否需要清除过期数据
-				int atomicInteger = tokenCache.getAtomicInteger();
+				int atomicInteger = tokenCache.getAtomicInteger();    //从缓存中取出用户登陆次数
 				if (atomicInteger % 3 == 0) {
 					tokenCache.clearData();
 				}
@@ -85,7 +85,7 @@ public class LoginServiceImpl implements LoginService {
 				// 加入到上下文
 				tokenApplication.setToken(token);
 				tokenApplication.setUserId(allRoleVO.getId());
-
+                //将token
 				tokenVO.setToken(token);
 				tokenVO.setUserId(allRoleVO.getId());
 				return tokenVO;

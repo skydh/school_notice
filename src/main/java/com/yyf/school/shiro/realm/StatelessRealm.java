@@ -25,6 +25,9 @@ public class StatelessRealm extends AuthorizingRealm {
 	private TokenCache tokenCach;
 	@Autowired
 	private TokenApplication tokenApplication;
+	
+	
+
 
 	@Override
 	public boolean supports(AuthenticationToken token) {

@@ -21,6 +21,7 @@ public class AllRoleVO implements Serializable {
 	private Integer caseSchool;
 	private String contend;
 	private String userName;
+	private Integer isAllow;
 	private List<AllRoleVO> list;
 
 	public String getId() {
@@ -111,5 +112,15 @@ public class AllRoleVO implements Serializable {
 	public void setList(List<AllRoleVO> list) {
 		this.list = list;
 	}
+
+	public Integer getIsAllow() {
+		return isAllow;
+	}
+
+	public void setIsAllow(Integer isAllow) {
+		this.isAllow = isAllow;
+	}
+
+
 
 }

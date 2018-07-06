@@ -10,6 +10,8 @@ public class AggVO implements Serializable {
 	private List<NoticeVO> list;
 
 	private Boolean approveMenu;
+	
+	private Boolean noticeShow;
 
 	public List<NoticeVO> getList() {
 		return list;
@@ -25,6 +27,14 @@ public class AggVO implements Serializable {
 
 	public void setApproveMenu(Boolean approveMenu) {
 		this.approveMenu = approveMenu;
+	}
+
+	public Boolean getNoticeShow() {
+		return noticeShow;
+	}
+
+	public void setNoticeShow(Boolean noticeShow) {
+		this.noticeShow = noticeShow;
 	}
 
 }

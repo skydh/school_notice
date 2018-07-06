@@ -37,11 +37,15 @@ public class LoginController {
 	 * 且，判断其原子变量除以100是否余0，若是除的尽，那么删除过期时间的key-value.
 	 * 
 	 * z这里加user_name唯一校验//由于时间问题不加了
-	 * 
 	 * @param courseId
 	 * @param password
+	 * 
 	 * @return
 	 */
+	
+	public LoginController() {
+		System.out.println("LoginController");
+	}
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	@ResponseBody
 	public BackDataJson login(@RequestParam("username") String username, @RequestParam("password") String password) {
